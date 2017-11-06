@@ -32,10 +32,12 @@ public class Candidate{
 
 	String id;
 	String sessionId;
+
 	double totalMarks;
 	double totalNormalisedMarks;
 	int rank;
 	int normalisedRank;
+
 	Map<String, Subject> subjects;
 
 

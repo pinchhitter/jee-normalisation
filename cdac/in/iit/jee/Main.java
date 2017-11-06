@@ -102,27 +102,43 @@ public class Main{
 
 		Collections.sort( candidates, new MarksComp() );
 		double oldMarks = 99999.0d;	
-		for(int i = 0, count = 1, rank = 1; i < candidates.size(); i++, count++){
-			Candidate candidate = candidates.get(i);
+		int rank = 0;
+		Candidate prevCandidate = null;
+		for(Candidate candidate: candidates){
 			double marks = candidate.getMarks();
-			if( oldMarks > marks)
-				rank = count;
-			
-			oldMarks = marks;
+			if( oldMarks > marks ){
+				rank++;
+			}else if ( oldMarks == marks ){
+				if( Util.compare( prevCandidate, candidate ) != 0 ){
+					rank++;	
+				}else{
+					System.err.println("Tie beetween: "+candidate.id+", "+prevCandidate.id);
+				}
+			} 
 			candidate.rank = rank;
-		}
+			oldMarks = marks;
+			prevCandidate = candidate;
+		}	
 
 		Collections.sort( candidates, new NorMarksComp() );
 		oldMarks = 99999.0d;	
-		for(int i = 0, count = 1, rank = 1; i < candidates.size(); i++, count++){
-			Candidate candidate = candidates.get(i);
+		rank = 0;
+		prevCandidate = null;
+		for(Candidate candidate: candidates){
 			double marks = candidate.getNRMarks();
-			if( oldMarks > marks)
-				rank = count;
-
-			oldMarks = marks;
+			if( oldMarks > marks ){
+				rank++;
+			}else if ( oldMarks == marks ){
+				if( Util.compareNor( prevCandidate, candidate ) != 0 ){
+					rank++;	
+				}else{
+					System.err.println("Tie beetween: "+candidate.id+", "+prevCandidate.id);
+				}
+			} 
 			candidate.normalisedRank = rank;
-		}
+			oldMarks = marks;
+			prevCandidate = candidate;
+		}	
 	}
 
 	void print(){
